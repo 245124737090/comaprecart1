@@ -5,353 +5,76 @@
   <title>CompareCart – Price Comparison</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f3ff;
-      color: #0f172a;
-    }
-    a { text-decoration: none; color: inherit; }
-
-    /* layout */
-    .page {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #eef2ff, #f9fafb);
-    }
-    .shell {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
-    }
-
-    /* navbar */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 12px 30px rgba(15,23,42,0.08);
-      margin-bottom: 24px;
-    }
-    .nav-left { display: flex; align-items: center; gap: 10px; }
-    .nav-logo {
-      width: 32px; height: 32px;
-      border-radius: 999px;
-      background: #7c3aed;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-weight: 700; font-size: 16px;
-    }
-    .nav-title { font-weight: 800; font-size: 18px; color: #4c1d95; }
-    .nav-links { display: flex; gap: 14px; font-size: 14px; color: #6b7280; }
-    .nav-links span.active { color: #4c1d95; font-weight: 600; }
-    .nav-right { display: flex; gap: 8px; align-items: center; }
-    .pill-btn {
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      font-size: 13px;
-      background: #fff;
-      cursor: pointer;
-    }
-    .pill-btn.primary {
-      border-color: transparent;
-      background: #7c3aed;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    /* hero */
-    .hero-card {
-      margin-top: 16px;
-      background: #f9fafb;
-      border-radius: 26px;
-      padding: 28px 30px 26px;
-      box-shadow: 0 24px 60px rgba(15,23,42,0.12);
-    }
-    .hero-title {
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: #7c3aed;
-      text-align: center;
-      margin-bottom: 6px;
-    }
-    .hero-sub {
-      text-align: center;
-      font-size: 14px;
-      color: #4b5563;
-      margin-bottom: 18px;
-    }
-
-    .search-wrap {
-      max-width: 520px;
-      margin: 0 auto;
-      background: #ede9fe;
-      border-radius: 999px;
-      padding: 5px;
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .search-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      padding: 8px 10px 8px 14px;
-      font-size: 14px;
-      color: #111827;
-    }
-    .search-input::placeholder { color: #9ca3af; }
-    .search-btn {
-      border: none;
-      border-radius: 999px;
-      background: linear-gradient(135deg,#7c3aed,#4f46e5);
-      color: #fff;
-      font-size: 14px;
-      padding: 8px 18px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 10px 22px rgba(79,70,229,0.45);
-    }
-
-    .category-row {
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .cat-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      cursor: pointer;
-      border: none;
-    }
-    .cat-pill.elec { background: #e0f2fe; color: #0369a1; }
-    .cat-pill.home { background: #dcfce7; color: #15803d; }
-    .cat-pill.sports { background: #ffedd5; color: #c2410c; }
-
-    /* section title */
-    .section-head {
-      margin-top: 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-    }
-    .section-sub { font-size: 12px; color: #6b7280; }
-
-    /* product cards */
-    .card-grid {
-      margin-top: 16px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
-      gap: 16px;
-    }
-    .p-card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 12px 12px 14px;
-      box-shadow: 0 16px 32px rgba(15,23,42,0.12);
-      border: 1px solid #e5e7eb;
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-    }
-    .p-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 22px 40px rgba(15,23,42,0.18);
-    }
-    .p-image {
-      width: 100%; height: 150px;
-      border-radius: 14px;
-      background: #111827;
-      display: flex; align-items: center; justify-content: center;
-      color: #e5e7eb;
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-    .p-meta-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      font-size: 11px;
-    }
-    .badge-cat {
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 500;
-    }
-    .rating {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      color: #f59e0b;
-    }
-    .p-name {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      min-height: 32px;
-      color: #111827;
-    }
-    .p-desc {
-      font-size: 11px;
-      color: #6b7280;
-      min-height: 30px;
-      margin-bottom: 8px;
-    }
-    .p-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 12px;
-    }
-    .price-main { font-size: 15px; font-weight: 700; color: #7c3aed; }
-    .price-label { font-size: 11px; color: #6b7280; }
-    .compare-link {
-      font-size: 12px;
-      color: #7c3aed;
-      font-weight: 600;
-    }
-
-    /* detail + comparison layout */
-    .detail-wrap {
-      margin-top: 26px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 20px;
-    }
-    .detail-card,
-    .table-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 18px 20px 16px;
-      box-shadow: 0 18px 40px rgba(15,23,42,0.13);
-      border: 1px solid #e5e7eb;
-    }
-    .detail-header {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #9ca3af;
-      margin-bottom: 4px;
-    }
-    .detail-name {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .detail-price {
-      font-size: 22px;
-      font-weight: 800;
-      color: #7c3aed;
-    }
-    .detail-best {
-      font-size: 11px;
-      color: #16a34a;
-      margin-bottom: 8px;
-    }
-    .detail-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      font-size: 11px;
-      color: #4b5563;
-      margin: 10px 0 14px;
-    }
-    .detail-meta span strong { display: block; font-size: 11px; color: #6b7280; }
-    .detail-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
-    }
-    .btn-solid {
-      flex: 1;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg,#7c3aed,#4f46e5);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-ghost {
-      flex: 1;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px dashed #d4d4d8;
-      background: #faf5ff;
-      font-size: 12px;
-      color: #4c1d95;
-      cursor: pointer;
-    }
-    .detail-updated {
-      margin-top: 8px;
-      font-size: 11px;
-      color: #9ca3af;
-      text-align: right;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      margin-top: 6px;
-    }
-    th, td {
-      padding: 7px 6px;
-      text-align: left;
-    }
-    thead tr {
-      background: #f9fafb;
-      color: #6b7280;
-    }
-    tbody tr:nth-child(even) { background: #f9fafb; }
-    tbody tr:nth-child(odd) { background: #fff; }
-    tbody tr.best-row { background: rgba(16,185,129,0.07); }
-    .badge-best {
-      display: inline-block;
-      margin-left: 6px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      font-size: 10px;
-      background: #10b981;
-      color: #ecfdf5;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .status-ok {
-      color: #16a34a;
-      font-weight: 600;
-    }
-    .btn-view {
-      padding: 5px 10px;
-      border-radius: 999px;
-      border: none;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      color: #fff;
-      background: #7c3aed;
-    }
-    .muted { font-size: 11px; color: #9ca3af; margin-top: 8px; }
-
-    @media (max-width: 900px) {
-      .detail-wrap { grid-template-columns: 1fr; }
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f3ff;color:#0f172a}
+    a{text-decoration:none;color:inherit}
+    .page{min-height:100vh;background:linear-gradient(135deg,#eef2ff,#f9fafb)}
+    .shell{max-width:1120px;margin:0 auto;padding:20px 16px 40px}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 12px 30px rgba(15,23,42,.08);margin-bottom:24px}
+    .nav-left{display:flex;align-items:center;gap:10px}
+    .nav-logo{width:32px;height:32px;border-radius:999px;background:#7c3aed;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px}
+    .nav-title{font-weight:800;font-size:18px;color:#4c1d95}
+    .nav-links{display:flex;gap:14px;font-size:14px;color:#6b7280}
+    .nav-links span.active{color:#4c1d95;font-weight:600}
+    .nav-right{display:flex;gap:8px;align-items:center}
+    .pill-btn{padding:6px 14px;border-radius:999px;border:1px solid #e5e7eb;font-size:13px;background:#fff;cursor:pointer}
+    .pill-btn.primary{border-color:transparent;background:#7c3aed;color:#fff;font-weight:600}
+    .hero-card{margin-top:16px;background:#f9fafb;border-radius:26px;padding:28px 30px 26px;box-shadow:0 24px 60px rgba(15,23,42,.12)}
+    .hero-title{text-align:center;font-size:40px;font-weight:800;letter-spacing:-.04em;color:#7c3aed;margin-bottom:6px}
+    .hero-sub{text-align:center;font-size:14px;color:#4b5563;margin-bottom:18px}
+    .search-wrap{max-width:520px;margin:0 auto;background:#ede9fe;border-radius:999px;padding:5px;display:flex;gap:6px;align-items:center}
+    .search-input{flex:1;border:none;outline:none;background:transparent;padding:8px 10px 8px 14px;font-size:14px;color:#111827}
+    .search-input::placeholder{color:#9ca3af}
+    .search-btn{border:none;border-radius:999px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-size:14px;padding:8px 18px;font-weight:600;cursor:pointer;box-shadow:0 10px 22px rgba(79,70,229,.45)}
+    .category-row{margin-top:18px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .cat-pill{display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;font-size:13px;cursor:pointer;border:none}
+    .cat-pill.elec{background:#e0f2fe;color:#0369a1}
+    .cat-pill.home{background:#dcfce7;color:#15803d}
+    .cat-pill.sports{background:#ffedd5;color:#c2410c}
+    .section-head{margin-top:28px;display:flex;justify-content:space-between;align-items:baseline}
+    .section-title{font-size:18px;font-weight:700}
+    .section-sub{font-size:12px;color:#6b7280}
+    .card-grid{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+    .p-card{background:#fff;border-radius:18px;padding:12px 12px 14px;box-shadow:0 16px 32px rgba(15,23,42,.12);border:1px solid #e5e7eb;cursor:pointer;transition:transform .12s,box-shadow .12s}
+    .p-card:hover{transform:translateY(-4px);box-shadow:0 22px 40px rgba(15,23,42,.18)}
+    .p-image{width:100%;height:150px;border-radius:14px;background:#111827;display:flex;align-items:center;justify-content:center;color:#e5e7eb;font-size:24px;margin-bottom:8px}
+    .p-meta-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:11px}
+    .badge-cat{padding:2px 8px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:500}
+    .rating{display:inline-flex;align-items:center;gap:3px;color:#f59e0b}
+    .p-name{font-size:13px;font-weight:600;margin-bottom:4px;min-height:32px;color:#111827}
+    .p-desc{font-size:11px;color:#6b7280;min-height:30px;margin-bottom:8px}
+    .p-footer{display:flex;justify-content:space-between;align-items:flex-end;font-size:12px}
+    .price-main{font-size:15px;font-weight:700;color:#7c3aed}
+    .price-label{font-size:11px;color:#6b7280}
+    .compare-link{font-size:12px;color:#7c3aed;font-weight:600}
+    /* tabs */
+    .tabs{margin-top:30px;border-radius:20px;background:#f3f4ff;padding:4px;display:flex;gap:4px;max-width:260px}
+    .tab-btn{flex:1;border:none;border-radius:16px;padding:6px 10px;font-size:13px;cursor:pointer;background:transparent;color:#6b7280}
+    .tab-btn.active{background:#fff;color:#4c1d95;font-weight:600;box-shadow:0 6px 18px rgba(148,163,184,.5)}
+    .tab-panel{margin-top:14px}
+    .hidden{display:none}
+    .detail-card,.table-card{background:#fff;border-radius:20px;padding:18px 20px 16px;box-shadow:0 18px 40px rgba(15,23,42,.13);border:1px solid #e5e7eb}
+    .detail-header{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#9ca3af;margin-bottom:4px}
+    .detail-name{font-size:20px;font-weight:700;margin-bottom:4px}
+    .detail-price{font-size:22px;font-weight:800;color:#7c3aed}
+    .detail-best{font-size:11px;color:#16a34a;margin-bottom:8px}
+    .detail-meta{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:11px;color:#4b5563;margin:10px 0 14px}
+    .detail-meta span strong{display:block;font-size:11px;color:#6b7280}
+    .detail-actions{display:flex;gap:10px;margin-top:4px}
+    .btn-solid{flex:1;padding:9px 12px;border-radius:999px;border:none;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+    .btn-ghost{flex:1;padding:9px 12px;border-radius:999px;border:1px dashed #d4d4d8;background:#faf5ff;font-size:12px;color:#4c1d95;cursor:pointer}
+    .detail-updated{margin-top:8px;font-size:11px;color:#9ca3af;text-align:right}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+    th,td{padding:7px 6px;text-align:left}
+    thead tr{background:#f9fafb;color:#6b7280}
+    tbody tr:nth-child(even){background:#f9fafb}
+    tbody tr:nth-child(odd){background:#fff}
+    tbody tr.best-row{background:rgba(16,185,129,.07)}
+    .badge-best{display:inline-block;margin-left:6px;padding:3px 7px;border-radius:999px;font-size:10px;background:#10b981;color:#ecfdf5;text-transform:uppercase;letter-spacing:.08em}
+    .status-ok{color:#16a34a;font-weight:600}
+    .btn-view{padding:5px 10px;border-radius:999px;border:none;font-size:11px;font-weight:600;cursor:pointer;color:#fff;background:#7c3aed}
+    .muted{font-size:11px;color:#9ca3af;margin-top:8px}
+    @media(max-width:800px){.nav{flex-wrap:wrap;row-gap:8px}}
   </style>
 </head>
 <body>
@@ -364,7 +87,7 @@
         <div class="nav-logo">C</div>
         <div>
           <div class="nav-title">CompareCart</div>
-          <div style="font-size:11px; color:#9ca3af;">Choose the best price in one click</div>
+          <div style="font-size:11px;color:#9ca3af;">Choose the best price in one click</div>
         </div>
       </div>
       <div class="nav-links">
@@ -377,7 +100,7 @@
       </div>
     </nav>
 
-    <!-- HERO + SEARCH -->
+    <!-- HERO -->
     <section class="hero-card">
       <div class="hero-title">CompareCart</div>
       <p class="hero-sub">
@@ -385,15 +108,14 @@
       </p>
 
       <div class="search-wrap">
-        <input id="searchBox" class="search-input"
-               placeholder="Search products…" />
-        <button id="searchBtn" class="search-btn">Search</button>
+        <input id="searchBox" class="search-input" placeholder="Search products…" />
+        <button id="searchBtn" class="search-btn" type="button">Search</button>
       </div>
 
       <div class="category-row">
-        <button class="cat-pill elec">📱 Electronics</button>
-        <button class="cat-pill home">🏠 Home Appliances</button>
-        <button class="cat-pill sports">⚽ Sports</button>
+        <button class="cat-pill elec" type="button">📱 Electronics</button>
+        <button class="cat-pill home" type="button">🏠 Home Appliances</button>
+        <button class="cat-pill sports" type="button">⚽ Sports</button>
       </div>
     </section>
 
@@ -402,38 +124,38 @@
       <div class="section-head">
         <div>
           <div class="section-title">Trending Products</div>
-          <div class="section-sub">Best deals from top retailers</div>
+          <div class="section-sub">Best deals from top retailers (demo)</div>
         </div>
-        <div class="section-sub">Designed for demo – not real prices</div>
       </div>
-
-      <div class="card-grid" id="productGrid">
-        <!-- cards injected by JS -->
-      </div>
+      <div class="card-grid" id="productGrid"></div>
     </section>
 
-    <!-- DETAIL + COMPARISON -->
-    <section id="detailSection" style="display:none;">
-      <div class="detail-wrap">
+    <!-- TABS: DETAILS / COMPARE PRICES -->
+    <section style="margin-top:30px;">
+      <div class="tabs">
+        <button id="tabDetails" class="tab-btn active" type="button">Product details</button>
+        <button id="tabCompare" class="tab-btn" type="button">Compare prices</button>
+      </div>
+      <div id="panelDetails" class="tab-panel">
         <div class="detail-card">
           <div class="detail-header">Product comparison</div>
-          <div id="detailName" class="detail-name"></div>
+          <div id="detailName" class="detail-name">Select a product to view</div>
           <div id="detailPrice" class="detail-price"></div>
-          <div class="detail-best">Best price available</div>
-
+          <div id="detailBestText" class="detail-best" style="display:none;">Best price available</div>
           <div id="detailSpecs" class="detail-meta"></div>
-
           <div class="detail-actions">
-            <button id="buyNowBtn" class="btn-solid">Buy now</button>
-            <button class="btn-ghost">Track price</button>
+            <button id="buyNowBtn" class="btn-solid" type="button">Buy now</button>
+            <button class="btn-ghost" type="button">Track price</button>
           </div>
-
           <div id="detailUpdated" class="detail-updated"></div>
         </div>
-
+      </div>
+      <div id="panelCompare" class="tab-panel hidden">
         <div class="table-card">
           <div class="detail-header">Price comparison</div>
-          <div id="tableWrap"></div>
+          <div id="tableWrap" style="font-size:13px;color:#6b7280;">
+            Select a product above to load prices.
+          </div>
           <p class="muted">
             Prices and availability may change at checkout. Always verify on retailer site.
           </p>
@@ -445,7 +167,7 @@
 </div>
 
 <script>
-  // Demo product catalog
+  // --- DATA ---
   const PRODUCTS = [
     {
       id: 1,
@@ -478,56 +200,32 @@
         Battery: "5,000 mAh"
       },
       placeholder: "Galaxy image"
-    },
-    {
-      id: 3,
-      name: "PlayStation 5 Console (Slim)",
-      category: "Electronics",
-      rating: 4.9,
-      reviews: 15000,
-      basePrice: 40587,
-      desc: "Next‑gen gaming with ultra‑fast SSD and ray tracing.",
-      specs: {
-        Storage: "825GB SSD",
-        "Max resolution": "4K",
-        Bundle: "Digital / Disc"
-      },
-      placeholder: "PS5 image"
-    },
-    {
-      id: 4,
-      name: "LG OLED 55-inch 4K Smart TV",
-      category: "Electronics",
-      rating: 4.9,
-      reviews: 2100,
-      basePrice: 103617,
-      desc: "Perfect blacks and vibrant colors with OLED technology.",
-      specs: {
-        Screen: "55\" OLED 4K",
-        HDR: "Dolby Vision IQ",
-        Audio: "Dolby Atmos"
-      },
-      placeholder: "LG OLED image"
     }
   ];
 
+  // --- HELPERS ---
   const productGrid = document.getElementById("productGrid");
-  const detailSection = document.getElementById("detailSection");
+  const searchBox = document.getElementById("searchBox");
+  const searchBtn = document.getElementById("searchBtn");
   const detailName = document.getElementById("detailName");
   const detailPrice = document.getElementById("detailPrice");
+  const detailBestText = document.getElementById("detailBestText");
   const detailSpecs = document.getElementById("detailSpecs");
   const detailUpdated = document.getElementById("detailUpdated");
   const tableWrap = document.getElementById("tableWrap");
   const buyNowBtn = document.getElementById("buyNowBtn");
+  const tabDetails = document.getElementById("tabDetails");
+  const tabCompare = document.getElementById("tabCompare");
+  const panelDetails = document.getElementById("panelDetails");
+  const panelCompare = document.getElementById("panelCompare");
 
   let currentBestUrl = "#";
+  let currentProduct = null;
 
-  function formatINR(v) {
-    return "₹" + v.toLocaleString("en-IN");
-  }
+  function formatINR(v){return "₹"+v.toLocaleString("en-IN");}
 
-  function renderProducts() {
-    productGrid.innerHTML = PRODUCTS.map(p => `
+  function renderProducts(){
+    productGrid.innerHTML = PRODUCTS.map(p=>`
       <article class="p-card" data-id="${p.id}">
         <div class="p-image">${p.placeholder}</div>
         <div class="p-meta-top">
@@ -546,52 +244,56 @@
       </article>
     `).join("");
 
-    document.querySelectorAll(".p-card").forEach(card => {
-      card.addEventListener("click", () => {
+    document.querySelectorAll(".p-card").forEach(card=>{
+      card.addEventListener("click",()=>{
         const id = Number(card.getAttribute("data-id"));
-        const product = PRODUCTS.find(p => p.id === id);
-        if (product) showProduct(product);
+        const product = PRODUCTS.find(p=>p.id===id);
+        if(product) showProduct(product);
       });
     });
   }
 
-  async function fetchPrices(product) {
-    const q = product.name;
-    const resp = await fetch("/api/prices?query=" + encodeURIComponent(q));
+  async function fetchPrices(product){
+    const resp = await fetch("/api/prices?query="+encodeURIComponent(product.name));
     return resp.json();
   }
 
-  async function showProduct(product) {
+  async function showProduct(product){
+    currentProduct = product;
     detailName.textContent = product.name;
     detailSpecs.innerHTML = Object.entries(product.specs)
-      .map(([k,v]) => `<span><strong>${k}</strong>${v}</span>`)
-      .join("");
+      .map(([k,v])=>`<span><strong>${k}</strong>${v}</span>`).join("");
+    detailPrice.textContent = "";
+    detailBestText.style.display = "none";
+    detailUpdated.textContent = "";
+    tableWrap.textContent = "Fetching latest prices…";
 
-    detailSection.style.display = "block";
-    tableWrap.innerHTML = "<div style='font-size:13px;color:#6b7280;'>Fetching latest prices…</div>";
+    // auto switch to Compare tab
+    activateTab("compare");
 
-    try {
+    try{
       const data = await fetchPrices(product);
       const prices = data.prices || [];
-      if (!prices.length) {
-        tableWrap.innerHTML = "<div style='font-size:13px;color:#6b7280;'>No prices found.</div>";
+      if(!prices.length){
+        tableWrap.textContent = "No prices found for this product.";
         return;
       }
-      const sorted = [...prices].sort((a,b) => a.price - b.price);
+      const sorted = [...prices].sort((a,b)=>a.price-b.price);
       const best = sorted[0];
       currentBestUrl = best.url;
       detailPrice.textContent = formatINR(best.price);
-      detailUpdated.textContent = "Updated " + new Date().toLocaleTimeString();
+      detailBestText.style.display = "block";
+      detailUpdated.textContent = "Updated "+new Date().toLocaleTimeString();
 
-      const rows = sorted.map(p => `
-        <tr class="${p.best ? "best-row" : ""}">
-          <td>${p.store}${p.best ? '<span class="badge-best">Best deal</span>' : ""}</td>
+      const rows = sorted.map(p=>`
+        <tr class="${p.best?"best-row":""}">
+          <td>${p.store}${p.best?'<span class="badge-best">Best deal</span>':""}</td>
           <td><span class="status-ok">${p.status}</span></td>
           <td>${p.shipping}</td>
           <td>${formatINR(p.price)}</td>
           <td>
             <a href="${p.url}" target="_blank" rel="noopener noreferrer">
-              <button class="btn-view">View</button>
+              <button class="btn-view" type="button">View</button>
             </a>
           </td>
         </tr>
@@ -611,23 +313,47 @@
           <tbody>${rows}</tbody>
         </table>
       `;
-    } catch (e) {
+    }catch(e){
       console.error(e);
-      tableWrap.innerHTML = "<div style='font-size:13px;color:#b91c1c;'>Error fetching prices.</div>";
+      tableWrap.textContent = "Error fetching prices.";
     }
   }
 
-  document.getElementById("searchBtn").addEventListener("click", () => {
-    const text = document.getElementById("searchBox").value.trim().toLowerCase();
-    const match = PRODUCTS.find(p => p.name.toLowerCase().includes(text)) || PRODUCTS[0];
+  function activateTab(which){
+    if(which==="details"){
+      tabDetails.classList.add("active");
+      tabCompare.classList.remove("active");
+      panelDetails.classList.remove("hidden");
+      panelCompare.classList.add("hidden");
+    }else{
+      tabCompare.classList.add("active");
+      tabDetails.classList.remove("active");
+      panelCompare.classList.remove("hidden");
+      panelDetails.classList.add("hidden");
+    }
+  }
+
+  // --- event wiring ---
+  searchBtn.addEventListener("click", ()=>{
+    const q = searchBox.value.trim().toLowerCase();
+    if(!q){searchBox.focus();return;}
+    const match = PRODUCTS.find(p=>p.name.toLowerCase().includes(q)) || PRODUCTS[0];
     showProduct(match);
   });
-
-  buyNowBtn.addEventListener("click", () => {
-    window.open(currentBestUrl, "_blank", "noopener,noreferrer");
+  searchBox.addEventListener("keypress", e=>{
+    if(e.key==="Enter") searchBtn.click();
   });
+  buyNowBtn.addEventListener("click", ()=>{
+    if(currentBestUrl && currentBestUrl!=="#"){
+      window.open(currentBestUrl,"_blank","noopener,noreferrer");
+    }
+  });
+  tabDetails.addEventListener("click", ()=>activateTab("details"));
+  tabCompare.addEventListener("click", ()=>activateTab("compare"));
 
+  // initial render
   renderProducts();
 </script>
 </body>
 </html>
+
